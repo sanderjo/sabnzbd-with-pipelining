@@ -32,7 +32,7 @@ RUN cd / && git clone https://github.com/mnightingale/sabctools.git && \
 RUN cd / && git clone https://github.com/mnightingale/sabnzbd.git && \
         cd sabnzbd/ && git checkout origin/feature/pipelining && \
         sed -i '/^sabctools/d' requirements.txt && \
-        /venv-sabnzbd/bin/python3 -m pip install -r requirements.txt -U --break-system-packages
+        /venv-sabnzbd/bin/python3 -m pip install -r requirements.txt -U
 
 CMD env LANG=en_US.UTF-8 /venv-sabnzbd/bin/python3 /sabnzbd/SABnzbd.py -l2 -b0 --server 0.0.0.0:8080
 
