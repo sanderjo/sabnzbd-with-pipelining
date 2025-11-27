@@ -1,4 +1,4 @@
-# Version: 0.0.2
+# Version: 0.0.3
 FROM ubuntu:25.10
 
 # Docker image with SABnzbd with PIPELINING
@@ -40,7 +40,7 @@ RUN echo 'Hi, I am in your container'
 
 # ports and volumes
 EXPOSE 8080
-VOLUME /config /downloads /incomplete-downloads
+# VOLUME /config /downloads /incomplete-downloads
 
 
 # docker run -p 8080:8080 -v ~/config-sabnzbd-pipelining/:/config/ sanderjo/sabnzbd-pipelining
