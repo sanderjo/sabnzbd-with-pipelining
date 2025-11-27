@@ -1,5 +1,5 @@
 # Version: 0.0.2
-FROM ubuntu:24.04
+FROM ubuntu:25.10
 
 # Docker image with SABnzbd with PIPELINING
 
@@ -11,20 +11,30 @@ ENV HOME="/config"
 
 RUN apt update -y && apt upgrade -y
 
-RUN apt install -y python3-pip python3-setuptools git unrar par2 7zip 
+#RUN apt install -y python3-pip python3-setuptools git unrar par2 7zip
+RUN apt install -y python3-pip python3-setuptools python3-venv git unrar par2 7zip
+
+# create venv
+
+RUN python3 -m venv /venv-sabnzbd
+
+#RUN /venv-sabnzbd/bin/python3 -m ensurepip
+RUN /venv-sabnzbd/bin/python3 -m pip install setuptools
+
+
 
 # sabctools
 RUN cd / && git clone https://github.com/mnightingale/sabctools.git && \
-	cd sabctools/ && git checkout origin/feature/streaming_decoder && \
-	python3 setup.py install
+        cd sabctools/ && git checkout origin/feature/streaming_decoder && \
+        /venv-sabnzbd/bin/python3 setup.py install
 
 # sabnzbd
 RUN cd / && git clone https://github.com/mnightingale/sabnzbd.git && \
-	cd sabnzbd/ && git checkout origin/feature/pipelining && \
-	sed -i '/^sabctools/d' requirements.txt && \
-	python3 -m pip install -r requirements.txt -U --break-system-packages
-	
-CMD env LANG=en_US.UTF-8 python3 /sabnzbd/SABnzbd.py -l2 -b0 --server 0.0.0.0:8080
+        cd sabnzbd/ && git checkout origin/feature/pipelining && \
+        sed -i '/^sabctools/d' requirements.txt && \
+        /venv-sabnzbd/bin/python3 -m pip install -r requirements.txt -U
+
+CMD env LANG=en_US.UTF-8 /venv-sabnzbd/bin/python3 /sabnzbd/SABnzbd.py -l2 -b0 --server 0.0.0.0:8080
 
 RUN echo 'Hi, I am in your container'
 
@@ -34,6 +44,3 @@ VOLUME /config /downloads /incomplete-downloads
 
 
 # docker run -p 8080:8080 -v ~/config-sabnzbd-pipelining/:/config/ sanderjo/sabnzbd-pipelining
-
-
-
