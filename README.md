@@ -1,7 +1,7 @@
 # sabnzbd-with-pipelining
 SABnzbd with pipelining: more speed, less resources
 
-Just using the work of https://github.com/mnightingale/sabnzbd/tree/feature/pipelining
+Just using the impressive work of https://github.com/mnightingale/sabnzbd/tree/feature/pipelining
 
 
 Based on https://github.com/sabnzbd/sabnzbd/pull/3199#issuecomment-3557452806
