@@ -22,9 +22,16 @@ RUN python3 -m venv /venv-sabnzbd
 RUN /venv-sabnzbd/bin/python3 -m pip install setuptools
 
 
+
+# sabctools
+RUN cd / && git clone https://github.com/mnightingale/sabctools.git && \
+        cd sabctools/ && git checkout origin/feature/streaming_decoder && \
+        /venv-sabnzbd/bin/python3 setup.py install
+
 # sabnzbd
 RUN cd / && git clone https://github.com/mnightingale/sabnzbd.git && \
         cd sabnzbd/ && git checkout origin/feature/pipelining && \
+        sed -i '/^sabctools/d' requirements.txt && \
         /venv-sabnzbd/bin/python3 -m pip install -r requirements.txt -U
 
 CMD env LANG=en_US.UTF-8 /venv-sabnzbd/bin/python3 /sabnzbd/SABnzbd.py -l2 -b0 --server 0.0.0.0:8080
