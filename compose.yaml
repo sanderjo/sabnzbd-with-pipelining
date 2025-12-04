@@ -1,0 +1,14 @@
+---
+services:
+  sabnzbd:
+    image: sanderjo/sabnzbd-pipelining
+    container_name: sabnzbd-pipelining
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/CET
+    volumes:
+      - ~/config-sabnzbd-pipelining/:/config/
+    ports:
+      - 8080:8080
+    restart: unless-stopped

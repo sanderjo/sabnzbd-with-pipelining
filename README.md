@@ -14,6 +14,13 @@ docker build --no-cache -t sanderjo/sabnzbd-pipelining .
 
 # Run
 
+With `docker-compose`:
+```
+docker-compose up
+```
+
+or old-skool:
+
 ```
 docker run -p 8080:8080 sanderjo/sabnzbd-pipelining
 ```
